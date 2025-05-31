@@ -30,16 +30,38 @@ const useSpeech = (apiKey) => {
     }
   };
 
-  const stopRecording = async () => {
+  const transcribeInBackground = async (uri) => {
     try {
-      await recordingRef.current.stopAndUnloadAsync();
-      const uri = recordingRef.current.getURI();
       const responseText = await transcribeSpeech(uri, apiKey);
       setTranscript(responseText);
     } catch (error) {
-      console.error("stopRecording error:", error);
-    } finally {
+      console.error("Transcription error:", error);
+    }
+  };
+
+  const stopRecording = async () => {
+    const recording = recordingRef.current;
+    if (!recording) return;
+
+    try {
+      const status = await recording.getStatusAsync();
+
+      if (!status.isRecording && status.isDoneRecording) {
+        return;
+      }
+
+      await recording.stopAndUnloadAsync();
       setIsListening(false);
+      recordingRef.current = null;
+
+      const uri = recording.getURI();
+      if (uri) {
+        transcribeInBackground(uri);
+      }
+
+    } catch (error) {
+      console.error("stopRecording error:", error);
+      setIsListening(false); 
     }
   };
 
