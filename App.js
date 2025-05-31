@@ -1,8 +1,8 @@
-import { View, Text, Button, StyleSheet } from "react-native";
+import { OPENAI_API_KEY } from '@env';
+import { View, Text, TouchableOpacity } from "react-native";
 import useSpeech from "./hooks/useSpeech";
 import Response from "./components/response";
 import { unlockSpeech, cancelSpeech } from './components/speechControl';
-import { OPENAI_API_KEY } from '@env';
 import styles from "./AppStyles";
 
 export default function App() {
@@ -17,25 +17,23 @@ export default function App() {
     cancelSpeech();
   };
 
+ 
   return (
     <View style={styles.container}>
       <Text style={styles.transcript}>{transcript || "Say something..."}</Text>
+      <TouchableOpacity
+        style={[
+          styles.button,
+          isListening ? styles.stopButton : styles.startButton,
+        ]}
+        onPress={handleStartStop}
+      >
+        <Text style={styles.buttonText}>{isListening ? "Recording" : "Start"}</Text>
+      </TouchableOpacity>
 
-      <View style={styles.buttonWrapper}>
-        <Button
-          title={isListening ? "Stop" : "Start"}
-          onPress={handleStartStop}
-          color={isListening ? "red" : "green"}
-        />
-      </View>
-
-      <View style={styles.buttonWrapper}>
-        <Button
-          title="Mute"
-          onPress={handleMute}
-          color="#555"
-        />
-      </View>
+      <TouchableOpacity style={[styles.button, styles.muteButton]} onPress={handleMute}>
+        <Text style={styles.buttonText}>Mute</Text>
+      </TouchableOpacity>
 
       {!isListening && transcript && (
         <Response transcript={transcript} apiKey={OPENAI_API_KEY} />

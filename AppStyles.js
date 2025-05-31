@@ -9,13 +9,34 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   transcript: {
-    fontSize: 16,
-    marginBottom: 20,
+    fontSize: 18,
+    marginBottom: 30,
     textAlign: "center",
+    paddingHorizontal: 10,
   },
-  buttonWrapper: {
-    marginVertical: 5,
-    width: "60%",
+  button: {
+    paddingVertical: 20,
+    paddingHorizontal: 40,
+    borderRadius: 8,
+    marginVertical: 10,
+    width: "70%",
+    height: 150,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  startButton: {
+    backgroundColor: "#80bc24",
+  },
+  stopButton: {
+    backgroundColor: "#f08058",
+  },
+  muteButton: {
+    backgroundColor: "#6d5850",
+  },
+  buttonText: {
+    color: "#ffffff",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 
