@@ -16,7 +16,7 @@ const Response = ({ transcript, apiKey }) => {
           Speech.speak(res, {
             language: "en",
             pitch: 1.0,
-            rate: 1.0,
+            rate: 1.1,
           });
         }
       })
